@@ -1,4 +1,5 @@
 import { products } from '../data/products';
+import { Link } from 'react-router-dom';
 
 
 export default function FeaturedProducts() {
@@ -15,12 +16,12 @@ export default function FeaturedProducts() {
             <div className="p-4">
               <h3 className="text-lg font-semibold">{product.name}</h3>
               <p className="text-yellow-600 font-bold">{product.price}</p>
-              <a
-                href="#"
-                className="inline-block mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition"
-              >
-                View
-              </a>
+              <Link
+                  to={`/product/${product.id}`}
+                  className="inline-block mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition"
+                >
+                  View
+               </Link>
             </div>
           </div>
         ))}

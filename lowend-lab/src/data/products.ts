@@ -3,35 +3,39 @@ export interface Product {
   name: string;
   description: string;
   price: string;
-  image: string;
+  image: string
+  images: string[];
+  specs?: { [key: string]: string }
   category?: string;
   isNew?: boolean;
 }
 
 export const products: Product[] = [
-  {
+   {
     id: 1,
     name: "Fender Jazz Bass",
-    description: "A legendary 4-string bass with smooth playability and punchy tone.",
+    description: "A legendary 4-string bass with smooth playability.",
     price: "999 €",
-    image: "/products/fender_jazz_bass.jpg",
-    category: "bass",
-    isNew: true,
-  },
-  {
-    id: 2,
-    name: "Ampeg BA-210 Amp",
-    description: "Powerful 2x10'' bass amp with classic Ampeg tone.",
-    price: "549 €",
-    image: "/products/ampegba210.jpg",
-    category: "amp",
-  },
-  {
-    id: 3,
-    name: "Darkglass Anagram",
-    description: "Premium preamp and distortion pedal for modern bassists.",
-    price: "1090 €",
-    image: "/products/darkglassanagram.png",
-    category: "pedal",
-  },
+    image: "/products/jazz_bass/jazz_bass_1.png",
+    images: [
+      "/products/jazz_bass/jazz_bass_1.png", 
+      "/products/jazz_bass/jazz_bass_2.png",
+      "/products/jazz_bass/jazz_bass_3.png",
+      "/products/jazz_bass/jazz_bass_4.png",
+      "/products/jazz_bass/jazz_bass_5.png",
+      "/products/jazz_bass/jazz_bass_6.png",
+      "/products/jazz_bass/jazz_bass_7.png",
+    ],
+    specs: {
+      strings: "4",
+      body: "Alder",
+      neck: "Maple",
+      fretboard: "Rosewood",
+      scale: '34"',
+      stringSpacing: "19 mm",
+      pickups: "2x Single Coil",
+      finish: "Gloss Sunburst",
+      weight: "4.2 kg"
+    }
+   },
 ];

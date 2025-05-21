@@ -1,13 +1,22 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import FeaturedProducts from "./components/FeaturedProducts";
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import FeaturedProducts from './components/FeaturedProducts';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
-      <Hero />
-      <FeaturedProducts />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Hero />
+            <FeaturedProducts />
+          </>
+        } />
+        <Route path="/product/:id" element={<ProductDetails />} />
+      </Routes>
     </div>
   );
 }
