@@ -1,8 +1,16 @@
 import { useState } from "react";
 import Logo from '../assets/logos/logo.png'
 
+import MiniCart from "../components/MiniCart";
+
+
+
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  
+
+
 
   return (
     <header className="bg-black text-white shadow-md">
@@ -22,7 +30,12 @@ export default function Header() {
         <nav className="hidden md:flex space-x-6 text-sm md:text-base">
           <a href="#" className="hover:text-yellow-400 transition">Home</a>
           <a href="#" className="hover:text-yellow-400 transition">Shop</a>
-          <a href="#" className="hover:text-yellow-400 transition">Cart</a>
+<div className="relative group">
+  <MiniCart />
+</div>
+
+
+
           <a href="#" className="hover:text-yellow-400 transition">Contact</a>
         </nav>
 

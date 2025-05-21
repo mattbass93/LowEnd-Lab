@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedProducts from './components/FeaturedProducts';
 import ProductDetails from './pages/ProductDetails';
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <FeaturedProducts />
           </>
         } />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
       </Routes>
     </div>
