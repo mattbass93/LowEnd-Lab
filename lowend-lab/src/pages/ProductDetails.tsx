@@ -2,10 +2,15 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { products } from "../data/products";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCart } from "../hooks/useCart";
+
+
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === Number(id));
+  const { addToCart, cart } = useCart();
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -52,9 +57,17 @@ export default function ProductDetails() {
           <p className="text-yellow-600 text-5xl font-semibold mb-4">{product.price}</p>
           <p className="text-gray-700 mb-6">{product.description}</p>
 
-          <button className="bg-yellow-400 text-black px-6 py-3 rounded hover:bg-yellow-300 transition">
-            Add to Cart
-          </button>
+          <button
+  onClick={() => {
+    addToCart(product);
+    console.log(cart);
+  }}
+  className="bg-yellow-400 text-black px-6 py-3 rounded hover:bg-yellow-300 transition"
+>
+  Add to Cart
+</button>
+
+
 
           {/* Spécifications techniques */}
           {product.specs && (
