@@ -24,17 +24,29 @@ export default function ProductDetails() {
   if (!product) return <p className="text-center mt-10">Product not found.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto py-16 px-4">
+    <div className=" py-16 px-4">
+      <div className="mb-6">
+  <Link
+    to="/"
+    className="inline-flex items-center text-sm text-gray-500 hover:text-yellow-500 transition"
+  >
+    ← Back to Shop
+  </Link>
+</div>
+
       <div className="grid md:grid-cols-2 gap-12 items-start">
         {/* Galerie d'images */}
         <div className="w-full">
           <div className="relative">
-            <img
-              src={mainImage}
-              alt={product.name}
-              onClick={() => setShowModal(true)}
-              className="w-full h-96 object-contain bg-white p-4 rounded shadow cursor-pointer hover:opacity-90 transition"
-            />
+            <div className="relative group overflow-hidden rounded shadow bg-white p-4 h-96 cursor-zoom-in">
+  <img
+    src={mainImage}
+    alt={product.name}
+    onClick={() => setShowModal(true)}
+    className="w-full h-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-125"
+  />
+</div>
+
           </div>
 
           {/* Miniatures */}
@@ -88,14 +100,46 @@ export default function ProductDetails() {
             </div>
           )}
 
-          {/* Lien retour */}
-          <div className="mt-10">
-            <Link to="/" className="text-sm text-gray-500 hover:underline">
-              ← Back to shop
-            </Link>
-          </div>
         </div>
       </div>
+
+      {product.reviews && (
+  <div className="mt-12">
+    <h2 className="text-2xl font-bold mb-4">Avis clients</h2>
+
+    {/* Note moyenne */}
+    <div className="flex items-center gap-2 mb-4">
+      <span className="text-yellow-500 text-xl">
+        {"⭐".repeat(
+          Math.round(
+            product.reviews.reduce((acc, r) => acc + r.rating, 0) /
+              product.reviews.length
+          )
+        )}
+      </span>
+      <span className="text-sm text-gray-600">
+        ({product.reviews.length} avis)
+      </span>
+    </div>
+
+    {/* Liste des commentaires */}
+    <div className="space-y-4">
+      {product.reviews.map((review, i) => (
+        <div key={i} className="bg-white p-4 rounded shadow">
+          <div className="flex justify-between mb-1">
+            <span className="font-semibold">{review.user}</span>
+            <span className="text-xs text-gray-400">{review.date}</span>
+          </div>
+          <div className="text-yellow-400 text-sm mb-1">
+            {"⭐".repeat(review.rating)}{" "}
+            {"☆".repeat(5 - review.rating)}
+          </div>
+          <p className="text-gray-700 text-sm">{review.comment}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* Modale */}
       {showModal && (

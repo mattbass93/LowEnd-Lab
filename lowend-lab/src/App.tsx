@@ -4,6 +4,8 @@ import Hero from './components/Hero';
 import FeaturedProducts from './components/FeaturedProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Confirmation from "./pages/Confirmation";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           </>
         } />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/confirmation" element={<Confirmation />} />
         <Route path="/product/:id" element={<ProductDetails />} />
       </Routes>
     </div>

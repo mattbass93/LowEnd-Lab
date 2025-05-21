@@ -1,24 +1,22 @@
-import { useCart } from "../hooks/useCart";
 import { Link } from "react-router-dom";
+import { useCart } from "../hooks/useCart";
 
-export default function Cart() {
-  const { cart, removeFromCart, clearCart, totalItems } = useCart();
+export default function CartPage() {
+  const { cart, updateQuantity, removeFromCart } = useCart();
 
-
-  const totalPrice = cart.reduce((acc, item) => {
-    const numericPrice = parseFloat(item.price.replace(/[^\d.]/g, ""));
-    return acc + numericPrice * item.quantity;
-  }, 0);
+  const total = cart
+    .reduce((acc, item) => {
+      const price = parseFloat(item.price.replace(/[^\d.]/g, ""));
+      return acc + price * item.quantity;
+    }, 0)
+    .toFixed(2);
 
   if (cart.length === 0) {
     return (
       <div className="max-w-4xl mx-auto py-20 text-center">
         <h1 className="text-3xl font-bold mb-4">Votre panier est vide 🛒</h1>
-        <Link
-          to="/"
-          className="text-yellow-500 hover:underline"
-        >
-          ← Retour à la boutique
+        <Link to="/" className="text-yellow-500 hover:underline">
+          Retour à la boutique
         </Link>
       </div>
     );
@@ -26,47 +24,69 @@ export default function Cart() {
 
   return (
     <div className="max-w-4xl mx-auto py-16 px-4">
-      <h1 className="text-3xl font-bold mb-8">Votre panier ({totalItems} article{totalItems > 1 ? "s" : ""})</h1>
+      <h1 className="text-3xl font-bold mb-8">Votre panier</h1>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {cart.map((item) => (
           <div
             key={item.id}
-            className="flex items-center gap-4 p-4 bg-white rounded shadow"
+            className="flex items-center gap-4 bg-white shadow p-4 rounded"
           >
-            <img src={item.image} alt={item.name} className="w-20 h-20 object-contain" />
+            <Link to={`/product/${item.id}`}>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-20 h-20 object-contain rounded hover:scale-105 transition"
+              />
+            </Link>
+
             <div className="flex-1">
-              <h2 className="font-semibold">{item.name}</h2>
-              <p className="text-gray-500">{item.price}</p>
-              <p className="text-sm text-gray-400">Quantité : {item.quantity}</p>
+              <Link
+                to={`/product/${item.id}`}
+                className="text-base font-semibold text-black hover:text-yellow-500 transition"
+              >
+                {item.name}
+              </Link>
+
+              {/* Gestion des quantités */}
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  onClick={() => updateQuantity(item.id, -1)}
+                  className="w-7 h-7 rounded bg-gray-200 hover:bg-gray-300 text-black text-lg"
+                >
+                  –
+                </button>
+                <span className="text-sm">{item.quantity}</span>
+                <button
+                  onClick={() => updateQuantity(item.id, 1)}
+                  className="w-7 h-7 rounded bg-gray-200 hover:bg-gray-300 text-black text-lg"
+                >
+                  +
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => removeFromCart(item.id)}
-              className="text-red-500 hover:text-red-700 text-sm"
-            >
-              Supprimer
-            </button>
+
+            <div className="flex flex-col items-end gap-2">
+              <span className="font-semibold">{item.price}</span>
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="text-xs text-red-500 hover:underline"
+              >
+                Supprimer
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-10 text-right">
-        <p className="text-xl font-bold mb-4">
-          Total : {totalPrice.toFixed(2)} €
-        </p>
-        <div className="flex justify-between items-center">
-          <button
-            onClick={clearCart}
-            className="text-sm text-red-500 hover:text-red-700"
-          >
-            Vider le panier
-          </button>
-          <button
-            className="bg-yellow-400 text-black px-6 py-2 rounded hover:bg-yellow-300 transition"
-          >
-            Commander
-          </button>
-        </div>
+      <div className="mt-8 p-4 bg-white rounded shadow flex justify-between items-center">
+        <span className="font-semibold text-lg">Total : {total} €</span>
+        <Link
+          to="/checkout"
+          className="bg-yellow-400 text-black px-6 py-2 rounded hover:bg-yellow-300 transition font-semibold"
+        >
+          Finaliser la commande →
+        </Link>
       </div>
     </div>
   );
